@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.SceneManagement;
 
 public class GameBehavior : MonoBehaviour
@@ -14,12 +13,14 @@ public class GameBehavior : MonoBehaviour
     public bool showLossScreen = false;
 
     private int _itemCollected = 0;
-    public int Items    
+    public int Items
     {
         get { return _itemCollected; }
-        set { _itemCollected = value;
+        set
+        {
+            _itemCollected = value;
 
-            if(_itemCollected>=maxItems)
+            if (_itemCollected >= maxItems)
             {
                 labelText = "You have found all the items!";
                 showWinScreen = true;
@@ -40,7 +41,7 @@ public class GameBehavior : MonoBehaviour
         {
             _playerHP = value;
 
-            if(_playerHP <= 0)
+            if (_playerHP <= 0)
             {
                 labelText = "You want another life with that?";
                 showLossScreen = true;
@@ -50,7 +51,7 @@ public class GameBehavior : MonoBehaviour
             {
                 labelText = "Ouch... that's got hurt.";
             }
-    
+
         }
     }
 
@@ -66,17 +67,17 @@ public class GameBehavior : MonoBehaviour
         GUI.Box(new Rect(20, 50, 150, 25), "Items collected: " + _itemCollected);
         GUI.Label(new Rect(Screen.width / 2 - 100, Screen.height - 50, 300, 50), labelText);
 
-        if(showWinScreen)
+        if (showWinScreen)
         {
-            if(GUI.Button(new Rect(Screen.width/2-100,Screen.height/2-50,200,100), "YOU WON!"))
+            if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "YOU WON!"))
             {
-                RestartLevel();  
+                RestartLevel();
             }
         }
 
-        if(showLossScreen)
+        if (showLossScreen)
         {
-            if(GUI.Button(new Rect(Screen.width/2-100,Screen.height/2-50,200,100),"You lose..."))
+            if (GUI.Button(new Rect(Screen.width / 2 - 100, Screen.height / 2 - 50, 200, 100), "You lose..."))
             {
                 RestartLevel();
             }
