@@ -19,5 +19,7 @@ public class ItemBehavior : MonoBehaviour
 
             gameManager.Items += 1;
         }
+
+        gameManager.PrintLootReport();
     }
 }

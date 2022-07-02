@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameBehavior : MonoBehaviour
 {
+    public Stack<string> lootStack = new Stack<string>();
+
     public bool showWinScreen = false;
 
     public string labelText = "Collect all 4 items and win your freedom!";
@@ -55,6 +57,20 @@ public class GameBehavior : MonoBehaviour
         }
     }
 
+    public void Initialize()
+    {
+        lootStack.Push("Sword of Doom");
+        lootStack.Push("HP+");
+        lootStack.Push("Golden Key");
+        lootStack.Push("Winged Boot");
+        lootStack.Push("Mythril Bracers");
+    }
+
+    public void Start()
+    {
+        Initialize();
+    }
+
     void RestartLevel()
     {
         SceneManager.LoadScene(0);
@@ -82,5 +98,13 @@ public class GameBehavior : MonoBehaviour
                 RestartLevel();
             }
         }
+    }
+
+    public void PrintLootReport()
+    {
+        var currentItem = lootStack.Pop();
+        var nextItem = lootStack.Peek();
+        Debug.LogFormat("You got a {0}! You have got a good chance of finding a {1} next!", currentItem, nextItem);
+        Debug.LogFormat("There are {0} random items waiting for you!", lootStack.Count);
     }
 }
