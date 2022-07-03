@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//Мэнеджер игры
 public class GameBehavior : MonoBehaviour
 {
+    //Стэк для хранения лута игрока
     public Stack<string> lootStack = new Stack<string>();
 
+    //Флаги для проверки победы и порожения игрока
     public bool showWinScreen = false;
+    public bool showLossScreen = false;
 
     public string labelText = "Collect all 4 items and win your freedom!";
     public int maxItems = 1;
-
-    public bool showLossScreen = false;
-
     private int _itemCollected = 0;
     public int Items
     {
@@ -57,6 +58,7 @@ public class GameBehavior : MonoBehaviour
         }
     }
 
+    //Изначальные предметы в инвентаре
     public void Initialize()
     {
         lootStack.Push("Sword of Doom");
@@ -71,12 +73,14 @@ public class GameBehavior : MonoBehaviour
         Initialize();
     }
 
+    //Перезапуск уровня
     void RestartLevel()
     {
         SceneManager.LoadScene(0);
         Time.timeScale = 1.0f;
     }
 
+    //Вывод UI
     void OnGUI()
     {
         GUI.Box(new Rect(20, 20, 150, 25), "Player Health: " + _playerHP);
