@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Структура описывающая оружие
 public struct Weapon
 {
     public string name;
@@ -19,7 +20,7 @@ public struct Weapon
     }
 }
 
-
+//Класс описывающий игроков
 public class Character
 {
     public string name;
