@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+//Вся логика и поведение врагов
 public class EnemyBehavior : MonoBehaviour
 {
     public Transform player;
@@ -46,6 +47,7 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
+    //При запуске уровня в список заносятся все точки для патруля территории на уровне
     void InitializePatrolRoute()
     {
         foreach(Transform child in patrolRoute)
@@ -53,7 +55,8 @@ public class EnemyBehavior : MonoBehaviour
             locations.Add(child);
         }
     }
-
+    
+    //Переход к следующей точке патрулироания
     void MoveToNextPatrolLocation()
     {
         if(locations.Count==0)
@@ -65,6 +68,7 @@ public class EnemyBehavior : MonoBehaviour
         locationIndex = (locationIndex+1)%locations.Count;
     }
 
+    //Если игрок приблизился то следующая точка назначения - игрок
     void OnTriggerEnter(Collider other)
     {
         if(other.name == "Player")
@@ -75,6 +79,7 @@ public class EnemyBehavior : MonoBehaviour
 
     }
 
+    //Если игрок вышел из зоны видимости - возврат к патрулированию
     void OnTriggerExit(Collider other)
     {
         if(other.name == "Player")
@@ -83,6 +88,7 @@ public class EnemyBehavior : MonoBehaviour
         }
     }
 
+    //При столкновении с пулей игрока отнимается 1 жизнь
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.name == "Bullet(Clone)")
