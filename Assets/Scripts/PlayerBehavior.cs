@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//Поведение игрока
 public class PlayerBehavior : MonoBehaviour
 {
     public float moveSpeed = 10f;
@@ -31,12 +32,9 @@ public class PlayerBehavior : MonoBehaviour
     {
         vInput = Input.GetAxis("Vertical") * moveSpeed;
         hInput = Input.GetAxis("Horizontal") * rotateSpeed;
-        /*
-        this.transform.Translate(Vector3.forward * vInput * Time.deltaTime);
-        this.transform.Rotate(Vector3.up * hInput * Time.deltaTime);
-        */
     }
 
+    //Тут реализуем передвижение и стрельбу
     void FixedUpdate()
     {
         if(IsGrounded() && Input.GetKeyDown(KeyCode.Space))
@@ -57,6 +55,7 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
+    //Проверка того, находится ли игрок на земле
     private bool IsGrounded()
     {
         Vector3 capsuleBottom = new Vector3(_col.bounds.center.x,_col.bounds.min.y, _col.bounds.center.z);
@@ -64,6 +63,7 @@ public class PlayerBehavior : MonoBehaviour
         return grounded;
     }
 
+    //Если сталкиваемся с врагом то отнимается одна жизнь
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.name == "Enemy")
