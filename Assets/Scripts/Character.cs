@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//РЎС‚СЂСѓРєС‚СѓСЂР° РѕРїРёСЃС‹РІР°СЋС‰Р°СЏ РѕСЂСѓР¶РёРµ
+//Структура описывающая оружие
 public struct Weapon
 {
     public string name;
@@ -20,7 +20,7 @@ public struct Weapon
     }
 }
 
-//РљР»Р°СЃСЃ РѕРїРёСЃС‹РІР°СЋС‰РёР№ РёРіСЂРѕРєРѕРІ
+//Класс описывающий игроков
 public class Character
 {
     public string name;
@@ -47,5 +47,3 @@ public class Character
         this.exp = 0;
     }
 }
-
-

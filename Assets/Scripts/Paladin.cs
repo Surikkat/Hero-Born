@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//РџР°Р»Р°РґРёРЅ - РѕРґРёРЅ РёР· РёРіСЂРѕРІС‹С… РїРµСЂСЃРѕРЅР°Р¶РµР№ СЃ РѕСЂСѓР¶РёРµРј
+//Паладин - один из игровых персонажей с оружием
 public class Paladin : Character
 {
     public Weapon weapon;

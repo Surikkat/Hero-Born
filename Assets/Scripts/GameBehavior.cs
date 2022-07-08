@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//РњСЌРЅРµРґР¶РµСЂ РёРіСЂС‹
+//Мэнеджер игры
 public class GameBehavior : MonoBehaviour
 {
-    //РЎС‚СЌРє РґР»СЏ С…СЂР°РЅРµРЅРёСЏ Р»СѓС‚Р° РёРіСЂРѕРєР°
+    //Стэк для хранения лута игрока
     public Stack<string> lootStack = new Stack<string>();
 
-    //Р¤Р»Р°РіРё РґР»СЏ РїСЂРѕРІРµСЂРєРё РїРѕР±РµРґС‹ Рё РїРѕСЂРѕР¶РµРЅРёСЏ РёРіСЂРѕРєР°
+    //Флаги для проверки победы и порожения игрока
     public bool showWinScreen = false;
     public bool showLossScreen = false;
 
@@ -58,7 +58,7 @@ public class GameBehavior : MonoBehaviour
         }
     }
 
-    //РР·РЅР°С‡Р°Р»СЊРЅС‹Рµ РїСЂРµРґРјРµС‚С‹ РІ РёРЅРІРµРЅС‚Р°СЂРµ
+    //Изначальные предметы в инвентаре
     public void Initialize()
     {
         lootStack.Push("Sword of Doom");
@@ -73,14 +73,14 @@ public class GameBehavior : MonoBehaviour
         Initialize();
     }
 
-    //РџРµСЂРµР·Р°РїСѓСЃРє СѓСЂРѕРІРЅСЏ
+    //Перезапуск уровня
     void RestartLevel()
     {
         SceneManager.LoadScene(0);
         Time.timeScale = 1.0f;
     }
 
-    //Р’С‹РІРѕРґ UI
+    //Вывод UI
     void OnGUI()
     {
         GUI.Box(new Rect(20, 20, 150, 25), "Player Health: " + _playerHP);
@@ -102,13 +102,5 @@ public class GameBehavior : MonoBehaviour
                 RestartLevel();
             }
         }
-    }
-
-    public void PrintLootReport()
-    {
-        var currentItem = lootStack.Pop();
-        var nextItem = lootStack.Peek();
-        Debug.LogFormat("You got a {0}! You have got a good chance of finding a {1} next!", currentItem, nextItem);
-        Debug.LogFormat("There are {0} random items waiting for you!", lootStack.Count);
     }
 }

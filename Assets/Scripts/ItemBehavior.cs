@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//РџРѕРІРµРґРµРЅРёРµ РїСЂРµРґРјРµС‚РѕРІ
+//Поведение предметов
 public class ItemBehavior : MonoBehaviour
 {
     public GameBehavior gameManager;
@@ -13,15 +13,13 @@ public class ItemBehavior : MonoBehaviour
     }
     void OnCollisionEnter(Collision collision)
     {
-        //Р•СЃР»Рё РёРіСЂРѕРє СЃС‚Р°Р»РєРёРІР°РµС‚СЃСЏ СЃ РїСЂРµРґРјРµС‚РѕРј С‚Рѕ РѕРЅ РїРѕРґР±РёСЂР°РµС‚СЃСЏ
-        if(collision.gameObject.name == "Player")
+        //Если игрок сталкивается с предметом то он подбирается
+        if (collision.gameObject.name == "Player")
         {
             Destroy(this.transform.parent.gameObject);
             Debug.Log("Item collected!");
 
             gameManager.Items += 1;
         }
-
-        gameManager.PrintLootReport();
     }
 }

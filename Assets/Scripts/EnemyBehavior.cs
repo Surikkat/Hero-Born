@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-//Р’СЃСЏ Р»РѕРіРёРєР° Рё РїРѕРІРµРґРµРЅРёРµ РІСЂР°РіРѕРІ
+//Вся логика и поведение врагов
 public class EnemyBehavior : MonoBehaviour
 {
     public Transform player;
@@ -12,6 +12,8 @@ public class EnemyBehavior : MonoBehaviour
 
     private int locationIndex = 0;
     private NavMeshAgent agent;
+
+    private bool hunting = false;
 
     private int _lives = 3;
     public int EnemyLives
@@ -22,7 +24,7 @@ public class EnemyBehavior : MonoBehaviour
         {
             _lives = value;
 
-            if(_lives <= 0)
+            if (_lives <= 0)
             {
                 Destroy(this.gameObject);
                 Debug.Log("Enemy down.");
@@ -41,37 +43,39 @@ public class EnemyBehavior : MonoBehaviour
 
     void Update()
     {
-        if(agent.remainingDistance<0.2f && !agent.pathPending)
+        if (agent.remainingDistance < 0.5f && !agent.pathPending)
         {
             MoveToNextPatrolLocation();
         }
     }
 
-    //РџСЂРё Р·Р°РїСѓСЃРєРµ СѓСЂРѕРІРЅСЏ РІ СЃРїРёСЃРѕРє Р·Р°РЅРѕСЃСЏС‚СЃСЏ РІСЃРµ С‚РѕС‡РєРё РґР»СЏ РїР°С‚СЂСѓР»СЏ С‚РµСЂСЂРёС‚РѕСЂРёРё РЅР° СѓСЂРѕРІРЅРµ
+    //При запуске уровня в список заносятся все точки для патруля территории на уровне
     void InitializePatrolRoute()
     {
-        foreach(Transform child in patrolRoute)
+        foreach (Transform child in patrolRoute)
         {
             locations.Add(child);
         }
     }
-    
-    //РџРµСЂРµС…РѕРґ Рє СЃР»РµРґСѓСЋС‰РµР№ С‚РѕС‡РєРµ РїР°С‚СЂСѓР»РёСЂРѕР°РЅРёСЏ
+
+    //Переход к следующей точке патрулироания
     void MoveToNextPatrolLocation()
     {
-        if(locations.Count==0)
+        if (locations.Count == 0)
         {
             return;
         }
-
+        Debug.Log("Move to next");
         agent.destination = locations[locationIndex].position;
-        locationIndex = (locationIndex+1)%locations.Count;
+
+        locationIndex = (locationIndex + 1) % locations.Count;
+        Debug.LogFormat("Go to {0} location", locationIndex);
     }
 
-    //Р•СЃР»Рё РёРіСЂРѕРє РїСЂРёР±Р»РёР·РёР»СЃСЏ С‚Рѕ СЃР»РµРґСѓСЋС‰Р°СЏ С‚РѕС‡РєР° РЅР°Р·РЅР°С‡РµРЅРёСЏ - РёРіСЂРѕРє
+    //Если игрок приблизился то следующая точка назначения - игрок
     void OnTriggerEnter(Collider other)
     {
-        if(other.name == "Player")
+        if (other.name == "Player")
         {
             agent.destination = player.position;
             Debug.Log("Player detected - attack!");
@@ -79,22 +83,28 @@ public class EnemyBehavior : MonoBehaviour
 
     }
 
-    //Р•СЃР»Рё РёРіСЂРѕРє РІС‹С€РµР» РёР· Р·РѕРЅС‹ РІРёРґРёРјРѕСЃС‚Рё - РІРѕР·РІСЂР°С‚ Рє РїР°С‚СЂСѓР»РёСЂРѕРІР°РЅРёСЋ
+    //Если игрок вышел из зоны видимости - возврат к патрулированию
     void OnTriggerExit(Collider other)
     {
-        if(other.name == "Player")
+        if (other.name == "Player")
         {
             Debug.Log("Player out of range, resume patrol!");
+            MoveToNextPatrolLocation();
         }
     }
 
-    //РџСЂРё СЃС‚РѕР»РєРЅРѕРІРµРЅРёРё СЃ РїСѓР»РµР№ РёРіСЂРѕРєР° РѕС‚РЅРёРјР°РµС‚СЃСЏ 1 Р¶РёР·РЅСЊ
+    //При столкновении с пулей игрока отнимается 1 жизнь
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name == "Bullet(Clone)")
+        if (collision.gameObject.name == "Bullet(Clone)")
         {
             EnemyLives -= 1;
             Debug.Log("Critical Hit!");
         }
+    }
+
+    void OnCollisionExit(Collision collision)
+    {
+
     }
 }

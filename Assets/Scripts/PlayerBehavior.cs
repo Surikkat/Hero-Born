@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//РџРѕРІРµРґРµРЅРёРµ РёРіСЂРѕРєР°
+//Поведение игрока
 public class PlayerBehavior : MonoBehaviour
 {
     public float moveSpeed = 10f;
@@ -34,10 +34,10 @@ public class PlayerBehavior : MonoBehaviour
         hInput = Input.GetAxis("Horizontal") * rotateSpeed;
     }
 
-    //РўСѓС‚ СЂРµР°Р»РёР·СѓРµРј РїРµСЂРµРґРІРёР¶РµРЅРёРµ Рё СЃС‚СЂРµР»СЊР±Сѓ
+    //Тут реализуем передвижение и стрельбу
     void FixedUpdate()
     {
-        if(IsGrounded() && Input.GetKeyDown(KeyCode.Space))
+        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
             _rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
         }
@@ -47,7 +47,7 @@ public class PlayerBehavior : MonoBehaviour
         _rb.MovePosition(this.transform.position + this.transform.forward * vInput * Time.fixedDeltaTime);
         _rb.MoveRotation(_rb.rotation * angleRot);
 
-        if(Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             GameObject newBullet = Instantiate(bullet, this.transform.position + new Vector3(1, 0, 0), this.transform.rotation) as GameObject;
             Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
@@ -55,18 +55,18 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-    //РџСЂРѕРІРµСЂРєР° С‚РѕРіРѕ, РЅР°С…РѕРґРёС‚СЃСЏ Р»Рё РёРіСЂРѕРє РЅР° Р·РµРјР»Рµ
+    //Проверка того, находится ли игрок на земле
     private bool IsGrounded()
     {
-        Vector3 capsuleBottom = new Vector3(_col.bounds.center.x,_col.bounds.min.y, _col.bounds.center.z);
-        bool grounded = Physics.CheckCapsule(_col.bounds.center, capsuleBottom, distanceToGround, groundLayer,QueryTriggerInteraction.Ignore);
+        Vector3 capsuleBottom = new Vector3(_col.bounds.center.x, _col.bounds.min.y, _col.bounds.center.z);
+        bool grounded = Physics.CheckCapsule(_col.bounds.center, capsuleBottom, distanceToGround, groundLayer, QueryTriggerInteraction.Ignore);
         return grounded;
     }
 
-    //Р•СЃР»Рё СЃС‚Р°Р»РєРёРІР°РµРјСЃСЏ СЃ РІСЂР°РіРѕРј С‚Рѕ РѕС‚РЅРёРјР°РµС‚СЃСЏ РѕРґРЅР° Р¶РёР·РЅСЊ
+    //Если сталкиваемся с врагом то отнимается одна жизнь
     void OnCollisionEnter(Collision collision)
     {
-        if(collision.gameObject.name == "Enemy")
+        if (collision.gameObject.name == "Enemy")
         {
             _gameManager.HP -= 1;
         }

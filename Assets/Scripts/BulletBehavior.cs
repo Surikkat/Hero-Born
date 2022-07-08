@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//РџРѕРІРµРґРµРЅРёРµ РїСѓР»Рё
+//Поведение пули
 public class BulletBehavior : MonoBehaviour
 {
     public float onscreenDelay = 3f;
 
     void Start()
     {
-        //РџСѓР»СЏ Р±СѓРґРµС‚ РёСЃС‡РµР·Р°С‚СЊ СЃРїСѓСЃС‚СЏ РєР°РєРѕРµ С‚Рѕ РІСЂРµРјСЏ РїРѕСЃР»Рµ РїРѕСЏРІР»РµРЅРёСЏ С‡С‚РѕР±С‹ РЅР° СЃС†РµРЅРµ РЅРµ Р±С‹Р»Рѕ РјРЅРѕРіРѕ РѕР±СЉРµРєС‚РѕРІ
+        //Пуля будет исчезать спустя какое то время после появления чтобы на сцене не было много объектов
         Destroy(this.gameObject, onscreenDelay);
     }
 }

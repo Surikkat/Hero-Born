@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-//РџРѕРІРµРґРµРЅРёРµ РєР°РјРµСЂС‹
+//Поведение камеры
 public class CameraBehavior : MonoBehaviour
 {
-    //РљР°РјРµСЂР° РЅР°С…РѕРґРёС‚СЃСЏ РЅР° РєР°РєРѕРј С‚Рѕ СЂР°СЃСЃС‚РѕСЏРЅРёРё РѕС‚ РёРіСЂРѕРєР°
+    //Камера находится на каком то расстоянии от игрока
     public Vector3 camOffset = new Vector3(0f, 1.2f, -2.6f);
 
     private Transform target;
