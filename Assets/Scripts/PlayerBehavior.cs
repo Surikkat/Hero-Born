@@ -39,7 +39,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
         {
-            _rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
+            //_rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
         }
 
         Vector3 rotation = Vector3.up * hInput;
@@ -66,7 +66,7 @@ public class PlayerBehavior : MonoBehaviour
     //≈сли сталкиваемс€ с врагом то отнимаетс€ одна жизнь
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "Enemy")
+        if (collision.gameObject.name == "Enemy" || collision.gameObject.name == "Enemy 2" || collision.gameObject.name == "Enemy 3")
         {
             _gameManager.HP -= 1;
         }

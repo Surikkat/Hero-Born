@@ -36,6 +36,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
+        agent.speed = 5f;
 
         InitializePatrolRoute();
         MoveToNextPatrolLocation();
@@ -45,8 +46,17 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (agent.remainingDistance < 0.5f && !agent.pathPending)
         {
-            MoveToNextPatrolLocation();
+            if (hunting)
+            {
+                agent.destination = player.position;
+                agent.speed = 10f;
+            }
+            else
+            {
+                MoveToNextPatrolLocation();
+            }
         }
+
     }
 
     //ѕри запуске уровн€ в список занос€тс€ все точки дл€ патрул€ территории на уровне
@@ -79,6 +89,8 @@ public class EnemyBehavior : MonoBehaviour
         {
             agent.destination = player.position;
             Debug.Log("Player detected - attack!");
+
+            hunting = true;
         }
 
     }
@@ -90,6 +102,9 @@ public class EnemyBehavior : MonoBehaviour
         {
             Debug.Log("Player out of range, resume patrol!");
             MoveToNextPatrolLocation();
+
+            hunting = false;
+            agent.speed = 5f;
         }
     }
 
@@ -100,6 +115,11 @@ public class EnemyBehavior : MonoBehaviour
         {
             EnemyLives -= 1;
             Debug.Log("Critical Hit!");
+        }
+
+        if (collision.gameObject.name == "Player")
+        {
+            hunting = false;
         }
     }
 
