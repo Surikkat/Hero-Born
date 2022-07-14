@@ -37,11 +37,6 @@ public class PlayerBehavior : MonoBehaviour
     //Тут реализуем передвижение и стрельбу
     void FixedUpdate()
     {
-        if (IsGrounded() && Input.GetKeyDown(KeyCode.Space))
-        {
-            //_rb.AddForce(Vector3.up * jumpVelocity, ForceMode.Impulse);
-        }
-
         Vector3 rotation = Vector3.up * hInput;
         Quaternion angleRot = Quaternion.Euler(rotation * Time.fixedDeltaTime);
         _rb.MovePosition(this.transform.position + this.transform.forward * vInput * Time.fixedDeltaTime);
@@ -53,14 +48,6 @@ public class PlayerBehavior : MonoBehaviour
             Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
             bulletRB.velocity = this.transform.forward * bulletSpeed;
         }
-    }
-
-    //Проверка того, находится ли игрок на земле
-    private bool IsGrounded()
-    {
-        Vector3 capsuleBottom = new Vector3(_col.bounds.center.x, _col.bounds.min.y, _col.bounds.center.z);
-        bool grounded = Physics.CheckCapsule(_col.bounds.center, capsuleBottom, distanceToGround, groundLayer, QueryTriggerInteraction.Ignore);
-        return grounded;
     }
 
     //Если сталкиваемся с врагом то отнимается одна жизнь

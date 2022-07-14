@@ -36,6 +36,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         player = GameObject.Find("Player").transform;
+        agent.speed = 5f;
 
         InitializePatrolRoute();
         MoveToNextPatrolLocation();
@@ -48,6 +49,7 @@ public class EnemyBehavior : MonoBehaviour
             if (hunting)
             {
                 agent.destination = player.position;
+                agent.speed = 10f;
             }
             else
             {
@@ -73,11 +75,9 @@ public class EnemyBehavior : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Move to next");
         agent.destination = locations[locationIndex].position;
 
         locationIndex = (locationIndex + 1) % locations.Count;
-        Debug.LogFormat("Go to {0} location", locationIndex);
     }
 
     //Если игрок приблизился то следующая точка назначения - игрок
@@ -102,6 +102,7 @@ public class EnemyBehavior : MonoBehaviour
             MoveToNextPatrolLocation();
 
             hunting = false;
+            agent.speed = 5f;
         }
     }
 

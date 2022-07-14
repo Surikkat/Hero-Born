@@ -6,15 +6,16 @@ using UnityEngine.SceneManagement;
 //Мэнеджер игры
 public class GameBehavior : MonoBehaviour
 {
-    //Стэк для хранения лута игрока
-    public Stack<string> lootStack = new Stack<string>();
+    public Transform spawnPoints;
+    public List<Transform> itemSpawn;
+    public GameObject pickupItem;
 
     //Флаги для проверки победы и порожения игрока
     public bool showWinScreen = false;
     public bool showLossScreen = false;
 
     public string labelText = "Collect all 4 items and win your freedom!";
-    public int maxItems = 1;
+    public int maxItems = 3;
     private int _itemCollected = 0;
     public int Items
     {
@@ -58,19 +59,44 @@ public class GameBehavior : MonoBehaviour
         }
     }
 
-    //Изначальные предметы в инвентаре
-    public void Initialize()
-    {
-        lootStack.Push("Sword of Doom");
-        lootStack.Push("HP+");
-        lootStack.Push("Golden Key");
-        lootStack.Push("Winged Boot");
-        lootStack.Push("Mythril Bracers");
-    }
-
     public void Start()
     {
-        Initialize();
+        foreach (Transform spawn in spawnPoints)
+        {
+            itemSpawn.Add(spawn);
+        }
+        List<int> randomNumbers = new List<int>();
+
+        for (int i = 0; i < 3; ++i)
+        {
+            int newNumber;
+            bool flag = false;
+            do
+            {
+                newNumber = Random.Range(0, 6);
+                if (randomNumbers.Count == 0)
+                {
+
+                }
+                else
+                {
+                    foreach (int x in randomNumbers)
+                    {
+                        if (newNumber == x)
+                        {
+                            flag = true;
+                        }
+                    }
+                }
+            } while (flag);
+            Debug.Log(newNumber);
+            randomNumbers.Add(newNumber);
+        }
+
+        for (int i = 0; i < 3; ++i)
+        {
+            GameObject newPickUpItem = Instantiate(pickupItem, itemSpawn[randomNumbers[i]]) as GameObject;
+        }
     }
 
     //Перезапуск уровня
