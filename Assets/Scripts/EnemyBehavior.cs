@@ -75,11 +75,9 @@ public class EnemyBehavior : MonoBehaviour
         {
             return;
         }
-        Debug.Log("Move to next");
         agent.destination = locations[locationIndex].position;
 
         locationIndex = (locationIndex + 1) % locations.Count;
-        Debug.LogFormat("Go to {0} location", locationIndex);
     }
 
     //Если игрок приблизился то следующая точка назначения - игрок
