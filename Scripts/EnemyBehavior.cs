@@ -15,7 +15,7 @@ public class EnemyBehavior : MonoBehaviour
 
     private bool hunting = false;
 
-    private int _lives = 3;
+    private int _lives = 1;
     public int EnemyLives
     {
         get { return _lives; }

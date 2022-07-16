@@ -1,16 +1,16 @@
-using System.Collections;
+п»їusing System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-//Мэнеджер игры
+//ГЊГЅГ­ГҐГ¤Г¦ГҐГ° ГЁГЈГ°Г»
 public class GameBehavior : MonoBehaviour
 {
     public Transform spawnPoints;
     public List<Transform> itemSpawn;
     public GameObject pickupItem;
 
-    //Флаги для проверки победы и порожения игрока
+    //Г”Г«Г ГЈГЁ Г¤Г«Гї ГЇГ°Г®ГўГҐГ°ГЄГЁ ГЇГ®ГЎГҐГ¤Г» ГЁ ГЇГ®Г°Г®Г¦ГҐГ­ГЁГї ГЁГЈГ°Г®ГЄГ 
     public bool showWinScreen = false;
     public bool showLossScreen = false;
 
@@ -65,31 +65,32 @@ public class GameBehavior : MonoBehaviour
         {
             itemSpawn.Add(spawn);
         }
+
         List<int> randomNumbers = new List<int>();
 
-        for (int i = 0; i < 3; ++i)
+        int newNumber = Random.Range(0, 6);
+        randomNumbers.Add(newNumber);
+
+        bool flag = false;
+        for (int i = 0; i < 2; ++i)
         {
-            int newNumber;
-            bool flag = false;
+            flag = false;
             do
             {
                 newNumber = Random.Range(0, 6);
-                if (randomNumbers.Count == 0)
-                {
 
-                }
-                else
+                foreach(int numb in randomNumbers)
                 {
-                    foreach (int x in randomNumbers)
+                    if (newNumber == numb)
                     {
-                        if (newNumber == x)
-                        {
-                            flag = true;
-                        }
+                        flag = true;
+                    }
+                    else
+                    {
+                        flag = false;
                     }
                 }
             } while (flag);
-            Debug.Log(newNumber);
             randomNumbers.Add(newNumber);
         }
 
@@ -99,14 +100,14 @@ public class GameBehavior : MonoBehaviour
         }
     }
 
-    //Перезапуск уровня
+    //ГЏГҐГ°ГҐГ§Г ГЇГіГ±ГЄ ГіГ°Г®ГўГ­Гї
     void RestartLevel()
     {
         SceneManager.LoadScene(0);
         Time.timeScale = 1.0f;
     }
 
-    //Вывод UI
+    //Г‚Г»ГўГ®Г¤ UI
     void OnGUI()
     {
         GUI.Box(new Rect(20, 20, 150, 25), "Player Health: " + _playerHP);
