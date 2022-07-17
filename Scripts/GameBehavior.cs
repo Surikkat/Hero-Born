@@ -37,7 +37,7 @@ public class GameBehavior : MonoBehaviour
         }
     }
 
-    private int _playerHP = 3;
+    private int _playerHP = 30;
     public int HP
     {
         get { return _playerHP; }

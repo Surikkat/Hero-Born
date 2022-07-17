@@ -7,8 +7,6 @@ public class PlayerBehavior : MonoBehaviour
 {
     public float moveSpeed = 10f;
     public float rotateSpeed = 75f;
-    public float jumpVelocity = 5f;
-    public float distanceToGround = 0.1f;
     public LayerMask groundLayer;
 
     public GameObject bullet;
@@ -16,10 +14,14 @@ public class PlayerBehavior : MonoBehaviour
 
     private float vInput;
     private float hInput;
+    private float mouseX;
+    private float mouseY;
+
     private Rigidbody _rb;
     private CapsuleCollider _col;
 
     private GameBehavior _gameManager;
+    public GameObject camera;
 
     void Start()
     {
@@ -32,9 +34,20 @@ public class PlayerBehavior : MonoBehaviour
     {
         vInput = Input.GetAxis("Vertical") * moveSpeed;
         hInput = Input.GetAxis("Horizontal") * rotateSpeed;
+
+        mouseX += (Input.GetAxis("Mouse X") * 10f);
+        mouseY += (Input.GetAxis("Mouse Y") * 10f);
+
+        var rotationY = Mathf.Clamp(mouseY, 0f, 0f);
+        var rotationX = mouseX;
+
+        var newRotation = Quaternion.Euler(rotationY, rotationX, 0f);
+        //var newPosition = newRotation * new Vector3(0f, 0f, 2.6f) + this.transform.position;
+
+        this.transform.rotation = newRotation;
+        //camera.transform.position = newPosition;
     }
 
-    //Тут реализуем передвижение и стрельбу
     void FixedUpdate()
     {
         Vector3 rotation = Vector3.up * hInput;
