@@ -22,6 +22,9 @@ public class PlayerBehavior : MonoBehaviour
 
     private GameBehavior _gameManager;
     public GameObject camera;
+    public AudioSource audioSource;
+
+    private bool fire = false;
 
     void Start()
     {
@@ -37,15 +40,15 @@ public class PlayerBehavior : MonoBehaviour
 
         mouseX += (Input.GetAxis("Mouse X") * 10f);
         mouseY += (Input.GetAxis("Mouse Y") * 10f);
-
         var rotationY = Mathf.Clamp(mouseY, 0f, 0f);
         var rotationX = mouseX;
-
         var newRotation = Quaternion.Euler(rotationY, rotationX, 0f);
-        //var newPosition = newRotation * new Vector3(0f, 0f, 2.6f) + this.transform.position;
-
         this.transform.rotation = newRotation;
-        //camera.transform.position = newPosition;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            fire = true;
+        }
     }
 
     void FixedUpdate()
@@ -55,11 +58,14 @@ public class PlayerBehavior : MonoBehaviour
         _rb.MovePosition(this.transform.position + this.transform.forward * vInput * Time.fixedDeltaTime);
         _rb.MoveRotation(_rb.rotation * angleRot);
 
-        if (Input.GetMouseButtonDown(0))
+        if (fire)
         {
             GameObject newBullet = Instantiate(bullet, this.transform.position + new Vector3(1, 0, 0), this.transform.rotation) as GameObject;
             Rigidbody bulletRB = newBullet.GetComponent<Rigidbody>();
             bulletRB.velocity = this.transform.forward * bulletSpeed;
+            audioSource = GetComponent<AudioSource>();
+            audioSource.Play();
+            fire = false;
         }
     }
 

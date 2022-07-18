@@ -6,7 +6,7 @@ using UnityEngine;
 public class CameraBehavior : MonoBehaviour
 {
     // амера находитс€ на каком то рассто€нии от игрока
-    public Vector3 camOffset = new Vector3(-1f, 1.2f, -2.6f);
+    public Vector3 camOffset = new Vector3(-1f, 2f, -2.6f);
 
     private Transform target;
 
